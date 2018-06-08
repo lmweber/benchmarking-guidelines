@@ -26,13 +26,14 @@ If performing an independent benchmarking: optimize parameter settings for all m
 
 Also: Ensure that you have found all relevant methods to compare against. (This may take some time to set up, e.g. different methods may be in different programming languages. See Rule X.)
 
+Do you evaluate entire "pipelines" (including preprocessing etc) or specific steps (e.g., clustering)?
 
 
 ## Rule 2: Select (or design) appropriate benchmark datasets.
 
 Choose one or more benchmark datasets for your comparisons.
 
-Two main options: simulated data and real (experimental) data. Simulated data allows you to calculate statistical performance metrics against a known "truth" (see Rule 3); while experimental data (by definition) may more accurately represent real data structure.
+Two main options: simulated data and real (experimental) data. Simulated data allows you to calculate statistical performance metrics against a known "truth" (see Rule 3); while experimental data (by definition) may more accurately represent real data structure. 
 
 For some applications / data types, there may also be experimental data with known true signals, e.g. ERCC spike-ins for RNA-seq.
 
@@ -45,6 +46,8 @@ Are publicly available datasets available? Or do you need to generate your own d
 ## Rule 3: If you are using simulated data, take care to design meaningful simulations.
 
 Simulations should accurately reflect the features of real experimental data. This may be difficult to design, but is worth the effort.
+
+Not sure where to put this, but I think that sometimes there are reasons for having data not looking exactly like "real" data (e.g., smaller, exactly following a given distribution), at least when introducing a new method. You want to make sure that it works under the assumptions made by the model (maybe this is less benchmarking and more validation, though). 
 
 If simulations are too simple, your benchmarking may not show anything meaningful: all methods may perform perfectly (or almost perfectly), which does not provide the reader with any useful information. Simulations should be designed in a way that the methods 'separate', i.e. the best methods perform well, while poor methods do not.
 
@@ -68,7 +71,11 @@ Explain what some of these mean (what are true positives, false positives, FDR, 
 
 Note that these performance metrics all require a "truth" signal, i.e. simulated / semi-simulated data / experimental data with known true signals e.g. ERCC spike-ins. If you have used purely experimental data (which contains no truth signal), results will need to be interpreted qualitatively instead: has your method detected a particular (expected) signal of interest? (e.g. known signal of interest from previous studies).
 
+Many interesting evaluations can be made without truth: stability, biases, similarities between methods. Also null comparisons can often be generated without known truth.
+
 Interpret the results from the statistical performance metrics: can you rank the methods? Does one method perform best overall? In many cases, different methods will perform best under different circumstances (e.g. different datasets); in this case, ensure that you have enough benchmark datasets to cover the main expected analysis types (e.g. for clustering single-cell data: detecting major populations vs. rare populations).
+
+As far as possible, use the same type of output from all methods. E.g., don't generate ROC curves from p-values from some methods and adjusted p-values from other methods. 
 
 
 
@@ -80,19 +87,22 @@ The statistical performance metrics in Rule 4 all rely on a known "truth". Howev
 
 This is mainly relevant for experimental data (with or without truth signal); for simulations this may also provide another good check that the simulated data is meaningful.
 
+This is maybe the most "controversial". What is "biological meaning" - can we always build a story that will favor the method we like? Also, the rest of the rules are valid more generally. 
 
 
 ## Rule 6: Record all parameter settings and session information.
 
 Some methods may require a substantial amount of parameter tuning to optimize their performance. Record all final parameter settings used for the results presented in your comparison. This information can be included in supplementary information if you publish a paper. If the method can be run from the command line or using a script (or Galaxy?), save a script with the parameter settings (see Rule 10); if method is only available via graphical interface, take care to record all choices.
 
-Also record the session information: e.g. operating system, programming language version (e.g. R or Python version), and package or library versions. Some methods may give different performance for different package versions or different operating systems, so this information is important for users.
+Also record the session information: e.g. operating system, programming language version (e.g. R or Python version), and package or library versions. Some methods may give different performance for different package versions or different operating systems, so this information is important for users. 
 
 In R, you can get a summary of session information with the command `sessionInfo()`.
 
 Providing this information (parameters and session information) helps ensure reproducibility of your results (see Rule 10).
 
-Could also use automated tools to preserve the setup used e.g. Docker; or workflow management tools e.g. `make` or `workflowr` (see Rule 10).
+Could also use automated tools to preserve the setup used e.g. Docker; or workflow management tools e.g. `make` or `workflowr` (see Rule 10), `conda`. 
+
+Use up-to-date packages
 
 
 
@@ -104,6 +114,7 @@ Computational requirements: can the method be run on a standard laptop, or is a 
 
 Consider installation procedures. Is the method easily available from a standard package library (e.g. CRAN or Bioconductor for R) or package manager (e.g. pip for Python)? Or is it available in an easy-to-install binary format (e.g. downloadable .pkg or .exe)? Or an easy-to-install package from GitHub? Or is a complicated installation procedure required, e.g. compiling from source? (if a complicated installation procedure is required, this may be a limiting factor for many users). Is the method being actively maintained (e.g. Bioconductor packages), or is it a package from GitHub with no new commits for 5 years?
 
+Also documentation (accessibility/completeness) can be important.
 
 
 ## Rule 8: Decide on a strategy for presenting the results.
@@ -121,6 +132,8 @@ New methods are always being developed, and a published benchmarking study may q
 If possible, set up your benchmarkings in a way that allows new methods or new benchmarking datasets to be added at a later date (e.g by adding new code scripts or datasets). Setting up publicly accessible repositories with all code scripts and datasets facilitates this. New results could be added as an online supplement on an accompanying website.
 
 Future extensions may be added by yourself, or other readers in their own studies: making code and data public allows others to "fork" your repository and build on this for their own studies (see Rule 10).
+
+Provide also results, not just data. Otherwise anyone who wants to add a method must rerun all the other ones. ExperimentHub package?
 
 
 
