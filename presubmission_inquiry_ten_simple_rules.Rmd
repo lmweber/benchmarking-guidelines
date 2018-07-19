@@ -41,7 +41,7 @@ The ten Rules we propose for this article are:
 
 One previous article in the series ('Ten Simple Rules for Reducing Overoptimistic Reporting in Methodological Computational Research' [3]) partially covers some of these issues, but within a more specific context (namely, reducing bias due to poor design of method evaluations). Our proposed article would complement and extend this previous guidance by explaining our full set of procedures for method benchmarkings.
 
-We believe that a full article based on the above Rules would provide a useful reference for computational biology researchers and method developers.
+We believe that a full article based on the above Rules would provide a useful reference for an audience of computational biology researchers and method developers.
 
 Thank you for your consideration, and we look forward to your reply.
 
