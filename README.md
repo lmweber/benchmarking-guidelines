@@ -1,6 +1,6 @@
 # Ten simple rules
 
-Repository containing a draft of "10 Simple Rules for a Method Benchmarking and Comparison".
+Repository containing drafts of our "10 Simple Rules for a Method Benchmarking or Comparison" article.
 
-Draft is in RMarkdown format so we can add both text and example figures.
+Drafts are in RMarkdown format so we can add both text and example figures.
 
