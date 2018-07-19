@@ -129,7 +129,7 @@ Consider installation procedures. Is the method easily available from a standard
 
 ## Rule 8: Decide on a strategy for presenting the results.
 
-Publish as a standard academic paper in a journal? If so, consider also posting a preprint. Also consider open access (and bioRxiv preprint). When presenting a new method, the benchmarking will form part of the paperL i.e. showing that the method works well on the benchmark datasets, and comparing with the existing methods. Alternatively, if performing an independent benchmarking of existing methods, the benchmarking will be the main focus of the paper.
+Publish as a standard academic paper in a journal? If so, consider also posting a preprint. Also consider open access (and bioRxiv preprint). When presenting a new method, the benchmarking will form part of the paper, i.e. showing that the method works well on the benchmark datasets, and comparing with the existing methods. Alternatively, if performing an independent benchmarking of existing methods, the benchmarking will be the main focus of the paper.
 
 May also be useful to add an online resource (which can be referred to in the paper), e.g. an interactive website for exploring the benchmarking results. Can use R/Shiny to set up this type of resource (include link or screenshot of an example here?). May require web hosting on a private server or using commercial options such as `shinyapps.io`. Interactive HTML site for exploring benchmarking results.
 
