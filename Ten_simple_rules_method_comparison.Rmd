@@ -22,7 +22,7 @@ Written from the perspective of biological research, but most of the points belo
 
 Are you introducing a new method? Or performing an independent benchmarking of existing methods? (Why are you performing a method comparison? Do you need one?)
 
-If introducing a new method: (i) thoroughly benchmark your new method, e.g. by demonstrating the effect of different options/arguments, and varying parameter settings; and (ii) benchmark against existing methods, using optimal parameter settings for each existing method (some parameter tuning for the existing methods will be required, but may not be particularly relevant to report all these results: main focus of your results should be on the merits of your new method; comparisons with existing methods should be streamlined e.g. using optimal parameter settings).
+If introducing a new method: (i) thoroughly benchmark your new method, e.g. by demonstrating the effect of different options/arguments, and varying parameter settings; and (ii) benchmark against existing methods, using optimal parameter settings for each existing method (some parameter tuning for the existing methods will be required, but may not be particularly relevant to report all these results: main focus of your results should be on [MR: the merits of] your new method; comparisons with existing methods should be streamlined e.g. using optimal parameter settings).
 
 If performing an independent benchmarking: optimize parameter settings for all methods; report effects of key parameters for each method. (Is one method best overall? Or do some methods perform well in certain circumstances, with certain parameter settings?)
 [MR: give an example - clustering, do we compare them all at the "true" number of clusters or each of them under their estimated number of clusters for a dataset]
@@ -34,7 +34,7 @@ Also: Ensure that you have found all relevant methods to compare against. (This 
 
 ## Rule 2: Select (or design) appropriate benchmark datasets.
 
-Choose one or more benchmark datasets for your comparisons.  [MR: should we argue towards real datasets .. or keep it balanced between simulation/real; to discuss]
+Choose one or more benchmark datasets for your comparisons. [MR: should we argue towards real datasets .. or keep it balanced between simulation/real; to discuss]
 
 Two main options: simulated data and real (experimental) data. Simulated data allows you to calculate statistical performance metrics against a known "truth" (see Rule 3); while experimental data (by definition) may more accurately represent real data structure.
 
@@ -44,8 +44,7 @@ Simulated and experimental can also be combined, e.g. computationally introducin
 
 Are publicly available datasets available? Or do you need to generate your own data (either simulated or experimental). Several public repositories available for certain types of data (see Rule Y).
 
-[MR: just a basic recommendation: look at positive/negative controls] 
-
+[MR: just a basic recommendation: look at positive/negative controls]
 
 
 ## Rule 3: If you are using simulated data, take care to design meaningful simulations.
@@ -138,7 +137,7 @@ May also be useful to add an online resource (which can be referred to in the pa
 
 ## Rule 9: Maximize the usefulness of your benchmarking by making it extendable to new methods or new datasets.
 
-New methods are always being developed, and a published benchmarking study may quickly become out-of-date, even by the time of publishing in a traditional journal.
+New methods are always being developed, and a published benchmarking study may quickly become out-of-date, [MR: even by the time of publishing in a traditional journal.]
 
 If possible, set up your benchmarkings in a way that allows new methods or new benchmarking datasets to be added at a later date (e.g by adding new code scripts or datasets). Setting up publicly accessible repositories with all code scripts and datasets facilitates this. New results could be added as an online supplement on an accompanying website.
 
