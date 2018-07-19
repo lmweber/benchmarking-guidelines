@@ -22,9 +22,10 @@ Written from the perspective of biological research, but most of the points belo
 
 Are you introducing a new method? Or performing an independent benchmarking of existing methods? (Why are you performing a method comparison? Do you need one?)
 
-If introducing a new method: (i) thoroughly benchmark your new method, e.g. by demonstrating the effect of different options/arguments, and varying parameter settings; and (ii) benchmark against existing methods, using optimal parameter settings for each existing method (some parameter tuning for the existing methods will be required, but may not be particularly relevant to report all these results: main focus of your results should be on your new method; comparisons with existing methods should be streamlined e.g. using optimal parameter settings).
+If introducing a new method: (i) thoroughly benchmark your new method, e.g. by demonstrating the effect of different options/arguments, and varying parameter settings; and (ii) benchmark against existing methods, using optimal parameter settings for each existing method (some parameter tuning for the existing methods will be required, but may not be particularly relevant to report all these results: main focus of your results should be on the merits of your new method; comparisons with existing methods should be streamlined e.g. using optimal parameter settings).
 
 If performing an independent benchmarking: optimize parameter settings for all methods; report effects of key parameters for each method. (Is one method best overall? Or do some methods perform well in certain circumstances, with certain parameter settings?)
+[MR: give an example - clustering, do we compare them all at the "true" number of clusters or each of them under their estimated number of clusters for a dataset]
 
 Also: Ensure that you have found all relevant methods to compare against. (This may take some time to set up, e.g. different methods may be in different programming languages. See Rule X.)
 
@@ -33,15 +34,17 @@ Also: Ensure that you have found all relevant methods to compare against. (This 
 
 ## Rule 2: Select (or design) appropriate benchmark datasets.
 
-Choose one or more benchmark datasets for your comparisons.
+Choose one or more benchmark datasets for your comparisons.  [MR: should we argue towards real datasets .. or keep it balanced between simulation/real; to discuss]
 
 Two main options: simulated data and real (experimental) data. Simulated data allows you to calculate statistical performance metrics against a known "truth" (see Rule 3); while experimental data (by definition) may more accurately represent real data structure.
 
-For some applications / data types, there may also be experimental data with known true signals, e.g. ERCC spike-ins for RNA-seq.
+For some applications / data types, there may also be experimental data with known true signals, e.g. ERCC spike-ins for RNA-seq. [MR: give more examples here, such as using X chromosome for a (not complete but decent) truth for silencing of genes and/or DNA methylation status; Smith PNAS paper, voom paper]
 
 Simulated and experimental can also be combined, e.g. computationally introducing an *in silico* spiked-in signal into experimental data (i.e. semi-simulated data).
 
 Are publicly available datasets available? Or do you need to generate your own data (either simulated or experimental). Several public repositories available for certain types of data (see Rule Y).
+
+[MR: just a basic recommendation: look at positive/negative controls] 
 
 
 
@@ -49,7 +52,7 @@ Are publicly available datasets available? Or do you need to generate your own d
 
 Simulations should accurately reflect the features of real experimental data. This may be difficult to design, but is worth the effort.
 
-[CS:] Not sure where to put this, but I think that sometimes there are reasons for having data not looking exactly like "real" data (e.g., smaller, exactly following a given distribution), at least when introducing a new method. You want to make sure that it works under the assumptions made by the model (maybe this is less benchmarking and more validation, though). 
+[CS:] Not sure where to put this, but I think that sometimes there are reasons for having data not looking exactly like "real" data (e.g., smaller, exactly following a given distribution), at least when introducing a new method. You want to make sure that it works under the assumptions made by the model (maybe this is less benchmarking and more validation, though). [MR: highlight 'countsimQC' as one example of doing due diligence of comparing simulated to real datasets to capture as many aspects as possible]
 
 If simulations are too simple, your benchmarking may not show anything meaningful: all methods may perform perfectly (or almost perfectly), which does not provide the reader with any useful information. Simulations should be designed in a way that the methods 'separate', i.e. the best methods perform well, while poor methods do not.
 
@@ -64,6 +67,8 @@ Simulations are especially useful for interrogate methods in detail, i.e. what a
 ## Rule 4: Calculate statistical performance metrics.
 
 Choose the most meaningful statistical performance metrics for your comparisons: examples include ROC curves, TPR-FDR curves, precision-recall curves, TPR, FPR. Also precision / recall / F1 scores, Adjusted Rand Index. Choice of metric depends on what exactly you are comparing.
+
+[MR: somewhere make the argument that for discovery-based analyses, it's about getting a good tradeoff between sensitivity and error control, and that is why we often go towards TPR versus FDP]
 
 Explain what some of these mean (what are true positives, false positives, FDR, etc.) Show formulas for F1 scores and Adjusted Rand Index.
 
@@ -110,13 +115,17 @@ Could also use automated tools to preserve the setup used e.g. Docker; or workfl
 
 ## Rule 7: Report runtimes and other computational requirements.
 
-The main evaluations of the methods should rely on the statistical performance metrics: the most important thing is that a method performs well. However, in some cases, computational runtimes and memory requirements can vary over orders of magnitude for different methods that perform similar tasks (e.g. clustering methods in my clustering comparison paper). In this case, a method with much faster runtimes (or lower memory requirements) may be preferred over a method with slightly better performance (e.g. 1000x faster runtimes).
+The main evaluations of the methods should rely on the statistical performance metrics (Rule 4): the most important thing is that a method performs well. However, in some cases, computational runtimes and memory requirements can vary over orders of magnitude for different methods that perform similar tasks (e.g. clustering methods in my clustering comparison paper). In this case, a method with much faster runtimes (or lower memory requirements) may be preferred over a method with slightly better performance (e.g. 1000x faster runtimes).
 
 Computational requirements: can the method be run on a standard laptop, or is a high-performance server required? For some types of analysis, users can be expected to have access to a high-performance server (e.g. RNA-seq read alignment). However, for some other types of analysis (e.g. clustering flow/mass cytometry data), most readers may only have access to a standard laptop or desktop computer, so requirement a high-performance server is a limiting factor for the method (other methods with lower requirements will be available for the same task).
 
 Consider installation procedures. Is the method easily available from a standard package library (e.g. CRAN or Bioconductor for R) or package manager (e.g. pip for Python)? Or is it available in an easy-to-install binary format (e.g. downloadable .pkg or .exe)? Or an easy-to-install package from GitHub? Or is a complicated installation procedure required, e.g. compiling from source? (if a complicated installation procedure is required, this may be a limiting factor for many users). Is the method being actively maintained (e.g. Bioconductor packages), or is it a package from GitHub with no new commits for 5 years?
 
 [CS:] Also documentation (accessibility/completeness) can be important.
+
+[MR: Is the software not only freely available, but open source.  In proteomics for example, there are some packages that are free, but closed source.  Also, re: Charlotte's comment and it came up with CvM, is the documentation and/or code evaluated - Wouter and Yvan did this in their recent trajectory preprint]
+
+[MR: does the software use standard formats?  You can ask Simone about a piece of software we tried to use recently that used very specific format of a GFF/GTF file to get coordinates and relationships between transcripts and genes.  Was a real hassle]
 
 
 ## Rule 8: Decide on a strategy for presenting the results.
@@ -129,7 +138,7 @@ May also be useful to add an online resource (which can be referred to in the pa
 
 ## Rule 9: Maximize the usefulness of your benchmarking by making it extendable to new methods or new datasets.
 
-New methods are always being developed, and a published benchmarking study may quickly become out-of-date.
+New methods are always being developed, and a published benchmarking study may quickly become out-of-date, even by the time of publishing in a traditional journal.
 
 If possible, set up your benchmarkings in a way that allows new methods or new benchmarking datasets to be added at a later date (e.g by adding new code scripts or datasets). Setting up publicly accessible repositories with all code scripts and datasets facilitates this. New results could be added as an online supplement on an accompanying website.
 
