@@ -1,0 +1,39 @@
+---
+title: "Ten Simple Rules: Draft Rules"
+author: "Lukas M. Weber, Wouter Saelens, Robrecht Cannoodt, Charlotte Soneson, Yvan Saeys, Mark D. Robinson"
+date: "`r format(Sys.Date(), '%B %d, %Y')`"
+output: html_document
+---
+
+
+# Ten Simple Rules for a Method Benchmarking or Comparison
+
+Draft rules for pre-submission inquiry letter to editor (rules only; no text).
+
+Merged version based on initial drafts from both labs.
+
+
+## Draft rules:
+
+- Rule 1: What is the purpose of your benchmarking or comparison?
+
+- Rule 2: Ensure that you have included all relevant methods.
+
+- Rule 3: Select (or design) a variety of representative benchmark datasets.
+
+- Rule 4: Evaluate methods according to statistical performance metrics.
+
+- Rule 5: Compare runtimes, computational requirements, user-friendliness, and documentation.
+
+- Rule 6: Record all parameter settings, as well as environment or session information.
+
+- Rule 7: Consider your audience: interpret results and provide conclusions or guidelines from both user and method developer perspectives.
+
+- Rule 8: Publish your results in an accessible format.
+
+- Rule 9: Design the benchmarking to allow future extensions to include new methods or new datasets.
+
+- Rule 10: Follow reproducible research best practices by making all code and data available in public repositories.
+
+
+
