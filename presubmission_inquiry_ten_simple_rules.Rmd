@@ -28,7 +28,7 @@ This article would be a joint submission from the Robinson lab at the University
 
 The ten Rules we propose for this article are:
 
-- Rule 1: What is the purpose of your benchmarking or comparison?
+- Rule 1: Define the purpose and scope of your benchmarking or comparison.
 - Rule 2: Ensure that you have included all relevant methods.
 - Rule 3: Select (or design) a variety of representative benchmark datasets.
 - Rule 4: Evaluate methods according to statistical performance metrics.
