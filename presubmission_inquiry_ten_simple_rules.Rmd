@@ -17,14 +17,14 @@ United Kingdom
 
 Zurich, 19 July 2018
 
-**Presubmission Inquiry: 'Ten Simple Rules for a Method Benchmarking or Comparison'**
+**Presubmission Inquiry: Ten Simple Rules for Method Benchmarking**
 
 
 Dear Prof. Nussinov, dear Prof. Papin, dear Prof. Bourne, dear Editors,
 
-We would like to submit a presubmission inquiry for a proposed article in the PLOS Computational Biology 'Ten Simple Rules' series, titled 'Ten Simple Rules for a Method Benchmarking or Comparison'.  This article would be a joint submission from the Robinson lab at the University of Zurich, Switzerland, and the Saeys lab at VIB-UGent Center for Inflammation Research, Belgium.
+We would like to submit a presubmission inquiry for a proposed article in the PLOS Computational Biology 'Ten Simple Rules' series, titled 'Ten Simple Rules for Method Benchmarking'.  This article would be a joint submission from the Robinson lab at the University of Zurich, Switzerland, and the Saeys lab at VIB-UGent Center for Inflammation Research, Belgium.
 
-We have found the Ten Simple Rules series to be an immensely valuable resource for guidance on a wide range of professional research practices. We believe that we can enhance this series by providing guidance on performing rigorous method benchmarking.  Such comparisons are a critical aspect of computational biology method development, and represents one theme of our research groups' activities (e.g., recent evaluations: [1], [2], [3], [4]). A 'Ten Simple Rules' article on this topic would allow us to communicate our experience in procedures and best practices with the wider computational biology community.
+We have found the Ten Simple Rules series to be an immensely valuable resource for guidance on a wide range of professional research practices. We believe that we can enhance this series by providing guidance on performing rigorous method benchmarking.  Such comparisons are a critical aspect of computational biology method development, and represent one theme of our research groups' activities (e.g., recent evaluations: [1], [2], [3], [4]). A 'Ten Simple Rules' article on this topic would allow us to communicate our experience in procedures and best practices with the wider computational biology community.
 
 The ten Rules we propose for this article are:
 
@@ -39,7 +39,7 @@ The ten Rules we propose for this article are:
 - Rule 9: Design the benchmarking to allow future extensions to include new methods or new datasets.
 - Rule 10: Follow reproducible research best practices by making all code and data available in public repositories.
 
-One previous article in the series ('Ten Simple Rules for Reducing Overoptimistic Reporting in Methodological Computational Research' [5]) partially covers some of these issues, but within a more specific context (namely, reducing bias due to poor design of method evaluations). Our proposed article would complement and extend this previous guidance by explaining our full set of procedures for method benchmarkings.
+One previous article in the series ('Ten Simple Rules for Reducing Overoptimistic Reporting in Methodological Computational Research' [5]) partially covers some of these issues, but within a more specific context (namely, reducing bias due to poor design of method evaluations). Our proposed article would complement and extend this previous guidance by explaining our full set of procedures for method benchmarking.
 
 We believe that a full article based on the above Rules would provide a useful reference for an audience of computational biology researchers and method developers.  The proposed author list (and order) is as follows: Lukas M. Weber, Wouter Saelens, Robrecht Cannoodt, Charlotte Soneson, Yvan Saeys, Mark D. Robinson.
 
