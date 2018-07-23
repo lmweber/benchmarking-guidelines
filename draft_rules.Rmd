@@ -1,8 +1,11 @@
 ---
-title: "Ten Simple Rules: Draft Rules"
-author: "Lukas M. Weber, Wouter Saelens, Robrecht Cannoodt, Charlotte Soneson, Yvan Saeys, Mark D. Robinson"
+title: 'Ten Simple Rules: Draft Rules'
+author: Lukas M. Weber, Wouter Saelens, Robrecht Cannoodt, Charlotte Soneson, Yvan
+  Saeys, Mark D. Robinson
 date: "`r format(Sys.Date(), '%B %d, %Y')`"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 

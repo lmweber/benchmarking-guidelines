@@ -2,7 +2,9 @@
 title: "Ten Simple Rules"
 author: "Lukas M. Weber, Charlotte Soneson, Mark D. Robinson"
 date: "`r format(Sys.Date(), '%B %d, %Y')`"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
