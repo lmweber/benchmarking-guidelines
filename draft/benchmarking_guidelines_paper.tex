@@ -55,7 +55,7 @@
 
 
 
-
+ When designing custom metrics, it is important to assess their robustness and usefulness across a wide range of possible predictions.
 %%%%%%%%%%
 % Document
 %%%%%%%%%%
@@ -111,7 +111,7 @@ Mark D. Robinson$^{1,2,*}$\\ \\
 \section*{Abstract}
 %%%%%%%%%%%%%%%%%%%
 
-In computational biology and other sciences, researchers are frequently faced with a choice between multiple available methods for performing computational data analyses. Method benchmarking studies aim to rigorously compare and evaluate the performance of different methods using representative benchmark datasets, in order to provide recommendations for the most suitable choice of method in a given analysis setting. However, method benchmarking studies must be carefully designed and implemented in order to provide accurate and unbiased results. Here, we provide several key guidelines and recommendations for performing high-quality method benchmarking, based on our own experiences in computational biology.
+In computational biol When designing custom metrics, it is important to assess their robustness and usefulness across a wide range of possible predictions.ogy and other sciences, researchers are frequently faced with a choice between multiple available methods for performing computational data analyses. Method benchmarking studies aim to rigorously compare and evaluate the performance of different methods using representative benchmark datasets, in order to provide recommendations for the most suitable choice of method in a given analysis setting. However, method benchmarking studies must be carefully designed and implemented in order to provide accurate and unbiased results. Here, we provide several key guidelines and recommendations for performing high-quality method benchmarking, based on our own experiences in computational biology.
 
 
 
@@ -139,7 +139,7 @@ Our research groups have recently performed several benchmarking studies in comp
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Box 1: Summary of guidelines}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%% When designing custom metrics, it is important to assess their robustness and usefulness across a wide range of possible predictions.%%%%%%%%%%%%%%
 
 The essential guidelines presented in this review may be summarized in the form of the following series of rules or recommendations. Each recommendation is discussed in more detail in the corresponding section in the text.
 
@@ -166,7 +166,7 @@ The essential guidelines presented in this review may be summarized in the form 
 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%% When designing custom metrics, it is important to assess their robustness and usefulness across a wide range of possible predictions.%%%%%%%%%%%%%%
 \section*{Defining the purpose and scope}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -215,7 +215,7 @@ The main performance evaluation and ranking should be based on a set of quantita
 
 For example, in a comparison of algorithms for a classification task such as clustering, with benchmark datasets containing a known ground truth or gold standard (e.g., \citep{Duo2018, Weber2016, Aghaeepour2013}), commonly used metrics to evaluate the performance of methods in recovering the known partition or set of clusters include the F1 score, adjusted Rand index, precision, and recall (sensitivity). These metrics may be calculated individually by class or cluster, or averaged (possibly weighted) across all classes. More generally, useful metrics for classification tasks include the true positive rate (TPR; sensitivity or recall), false positive rate (FPR; $1 -$ specificity), and false discovery rate (FDR). These types of metrics return a single value between 0 and 1 (or -1 and 1), which can be used to easily rank methods. In addition, metrics may be compared visually, e.g., using receiver operating characteristic (ROC) curves (TPR vs. FPR), TPR vs. FDR curves, or precision-recall (PR) curves. These visualizations can also be used as the basis to calculate further metrics, including area under the ROC curve (AUROC or AUC ROC) and area under the precision-recall curve (AUC PR). Figure \ref{fig:performance_metrics}(b) displays illustrative examples of several popular visualizations.
 
-For other types of algorithms, different performance metrics will be appropriate. For algorithms that return continuous values, examples include the root mean square error (RMSE), distance measures, and correlation. For particularly complex or unusual data structures, custom metrics may need to be developed: for example, in our comparison of algorithms for single-cell trajectory inference \citep{Saelens2018b}, we developed custom metrics to evaluate the ability to reconstruct the network topology, as well as the ability to order cells along branches within the network. If multiple metrics are considered, the rankings according to the different metrics will need to be combined or weighted in some way, in order to produce a final ranking of methods.
+For other types of algorithms, different performance metrics will be appropriate. For algorithms that return continuous values, examples include the root mean square error (RMSE), distance measures, and correlation. For particularly complex or unusual data structures, custom metrics may need to be developed: for example, in our comparison of algorithms for single-cell trajectory inference \citep{Saelens2018b}, we developed custom metrics to evaluate the ability to reconstruct the network topology, as well as the ability to order cells along branches within the network. Such metrics should be validated across a wide range of possible predictions, as to avoid any bias in the evaluation. If multiple metrics are considered, the rankings according to the different metrics will need to be combined or weighted in some way, in order to produce a final ranking of methods.
 
 Additional quantitative performance measures do not rely on a known ground truth or gold standard. These include measures of stability, stochasticity, robustness, and bias. For example, do methods give variable results when running multiple times? Are methods highly sensitive to input data? Do methods reliably run without errors? These measures may be quantified by running methods multiple times, e.g., using different `random seeds' (for methods that include a random start) or using subsampling to vary the input data. Finally, `null comparisons' can be used to investigate performance for simulated or experimental data that do not contain any true signal, providing information on expected error rates.
 
