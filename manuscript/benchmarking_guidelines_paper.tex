@@ -1,0 +1,371 @@
+%%%%%%%%%%%%%%%%%%%
+% Document settings
+%%%%%%%%%%%%%%%%%%%
+
+\documentclass[12pt, a4paper]{article}
+\usepackage[top = 2.25cm, left = 2.25cm, right = 2.25cm, bottom = 2.25cm]{geometry}
+\usepackage[utf8]{inputenc}
+
+\usepackage{setspace}  % line spacing
+\usepackage{lineno}  % line numbers
+
+%\usepackage{cite}  % citations
+\usepackage[square, numbers, sort&compress]{natbib}
+
+\usepackage{float}  % figure/table placement
+\usepackage{graphicx}  % figures
+
+% disable ligatures
+\usepackage{microtype}
+\DisableLigatures[f]{encoding = *, family = *}
+
+% include dots in table of contents
+%\usepackage{tocloft}
+%\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+
+% avoid single lines of text at top or bottom of page
+\widowpenalty 10000
+\clubpenalty 10000
+
+% text layout
+\sloppy
+\setlength{\parindent}{1cm}
+
+% captions: bold 'Figure #' heading and end with full stop; left-justified
+\usepackage[aboveskip = 10pt, labelfont = bf, labelsep = period, singlelinecheck = off, font = small]{caption}
+
+% links
+\usepackage{hyperref}
+\hypersetup{colorlinks, citecolor = black, linkcolor = black, urlcolor = blue}
+
+\usepackage[shortcuts]{extdash}  % allow line breaks at hyphens
+
+% subfigures
+\usepackage{subcaption}
+
+% leave date blank
+%\date{}
+
+% adjust font style for section headings
+\usepackage{titlesec}
+\titleformat*{\section}{\large\bfseries\flushleft}
+
+% to adjust indent width in enumerated list
+\usepackage{enumitem}
+
+
+
+
+%%%%%%%%%%
+% Document
+%%%%%%%%%%
+
+\begin{document}
+
+
+
+
+%%%%%%%%%%%%
+% Title page
+%%%%%%%%%%%%
+
+\title{\Large{\textbf{
+Essential practical guidelines for benchmarking computational methods
+}}{\vskip 1cm}}
+
+\author{
+Lukas M. Weber$^{1,2}$,
+Wouter Saelens$^{3,4}$,\\
+Robrecht Cannoodt$^{3,4}$,
+Charlotte Soneson$^{1,2,\dagger}$,\\
+Yvan Saeys$^{3,4,*}$,
+Mark D. Robinson$^{1,2,*}$\\ \\ \\
+\footnotesize{$^1$Institute of Molecular Life Sciences, University of Zurich, Zurich, Switzerland}\\
+\footnotesize{$^2$SIB Swiss Institute of Bioinformatics, University of Zurich, Zurich, Switzerland}\\
+\footnotesize{$^3$Data Mining and Modelling for Biomedicine, VIB Center for Inflammation Research, Ghent, Belgium}\\
+\footnotesize{$^4$Department of Applied Mathematics, Computer Science and Statistics, Ghent University, Ghent, Belgium}\\
+\footnotesize{$\dagger$Current address: Friedrich Miescher Institute for Biomedical Research, Basel, Switzerland}\\ \\
+\small{$^\star$Corresponding authors}\\ \\ \\ \\
+}
+
+\date{\today}
+
+
+
+\begin{titlepage}
+
+\maketitle
+
+% no page number (note: this line must be after \maketitle)
+\thispagestyle{empty}
+
+\end{titlepage}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%
+\section*{Abstract}
+%%%%%%%%%%%%%%%%%%%
+
+In computational biology and other sciences, researchers are frequently faced with a choice between several similar computational methods for performing the same type of data analysis. Benchmarking studies aim to rigorously compare and evaluate the performance of different methods using well-characterized benchmark datasets, in order to determine the strengths of each method or to provide recommendations regarding the best choice of method for a given analysis. However, benchmarking studies must be carefully designed and implemented in order to provide accurate and unbiased results. Here, we summarize key practical guidelines and recommendations for performing high-quality benchmarking analyses, based on our own experiences in computational biology.
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Introduction}
+%%%%%%%%%%%%%%%%%%%%%%%
+
+Many fields of computational research are characterized by a fast growing number of available methods for data analysis. For example, as of mid 2018, more than 230 methods are available for analyzing data from single-cell RNA-sequencing experiments \citep{Zappia2018}. For experimental researchers and other users of methods, this represents an invaluable opportunity, since new methods are frequently designed to give improved performance or address other limitations of existing methods. However, selecting the optimal method for an analysis is a crucial decision, which can significantly affect results and conclusions.
+
+Benchmarking or comparison studies are carried out by computational researchers in order to compare the performance of different methods, using standardized reference datasets and a range of evaluation criteria. This may be done by authors of new methods to demonstrate performance improvements or other advantages of their approach, or by independent groups interested in systematically comparing existing methods. `Neutral' benchmarking studies by independent groups are especially valuable for the research community, since there is no perception of bias \citep{Boulesteix2018, Boulesteix2013}.
+
+Our research groups have recently performed several benchmarking studies in computational biology \citep{Duo2018, Saelens2018a, Saelens2018b, Soneson2018, Weber2016}. During these studies, we have learned several key lessons, which we aim to synthesize in this review. A number of previous studies have also addressed this topic, from a range of different perspectives. These studies have provided advice on the design of real-data benchmarking studies by analogy to evidence-based medicine \citep{Boulesteix2017} and in terms of statistical hypothesis testing \citep{Boulesteix2015b}; guidance on the design of simulation studies \citep{Morris2018}; recommendations for reducing `overoptimistic' reporting when benchmarking newly developed methods \citep{Boulesteix2015a}; arguments stressing the need for neutral benchmarking studies \citep{Boulesteix2013}; a detailed discussion of benchmarking design for clustering methods \citep{VanMechelen2018}; an overview of challenges involved in benchmarking in the specific context of methods for identifying antimicrobial resistance determinants by sequencing \citep{Angers-Loustau2018}; as well as commentaries on benchmarking design in general \citep{Zheng2017}.
+
+In this review, our aim is to complement these previous studies by providing a summary of essential practical guidelines and recommendations for designing benchmarking analyses. Our target audience consists of computational researchers who are interested in performing a benchmarking study, or who have already begun one. Our review spans the full `pipeline' of benchmarking, from defining the purpose and scope to reproducible research best practices during publication. The review is structured as a series of guidelines, which are summarized in Box 1 and each explained in detail in the corresponding text section. We use examples from computational biology; however, we expect that the major arguments apply equally to other fields. We hope that these practical guidelines will continue the discussion on benchmarking design, as well as assisting computational researchers to design and implement rigorous, informative, and unbiased benchmarking analyses.
+
+
+
+
+% Box
+
+\vskip 1cm
+
+\setlength{\fboxsep}{4mm}
+\noindent\fbox{\begin{minipage}{0.95\textwidth}
+\begin{flushleft}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Box 1: Summary of guidelines}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The guidelines presented in this review may be summarized in the form of the following set of rules or recommendations. Each recommendation is discussed in more detail in the corresponding section in the text.
+
+\begin{enumerate}[leftmargin = 8mm]
+
+\item Define the purpose and scope of the benchmark or comparison.
+\item Include all relevant methods.
+\item Select (or design) representative datasets.
+\item Evaluate and rank methods according to key quantitative performance metrics.
+\item Evaluate runtimes and computational requirements, as well as user-friendliness, documentation, and other qualitative measures.
+\item Record parameter settings, and environment or session information.
+\item Interpret results and provide conclusions or guidelines from both user and method developer perspectives.
+\item Publish and distribute results in an accessible format.
+\item Design the benchmark to enable future extensions.
+\item Follow reproducible research best practices by making all code and data publicly available.
+
+\end{enumerate}
+
+\end{flushleft}
+\end{minipage}}
+
+\vskip 1.5cm
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Defining the purpose and scope}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Benchmarking analyses may be performed for a variety of reasons, depending on the study context. The underlying purpose of the benchmark or comparison will fundamentally guide the design and implementation. The purpose and scope should be clearly defined at the beginning of the study, to ensure that results are meaningful and that time and effort are not lost on unnecessary work.
+
+In general, we can define two broad types of benchmarking studies: (i) benchmarking performed by the authors of a new method, in order to demonstrate the merits of their approach (e.g., \citep{Weber2018, Nowicka2016, Levine2015, Zhou2014, Law2014}), or (ii) independent or neutral benchmarking studies, performed by external groups to systematically compare methods for a certain type of analysis. Independent benchmarking may either be carried out directly by the investigating group (e.g., \citep{Duo2018, Saelens2018a, Saelens2018b, Soneson2018, Weber2016, Baruzzo2017, Kanitz2015, Soneson2013, Rapaport2013, Dillies2012}), in collaboration with method authors (e.g., \citep{Sage2015}), or organized in the form of community initiatives or challenges (e.g., by the DREAM \citep{Weirauch2013, Costello2014, Kuffner2015, Ewing2015, Hill2016} and FlowCAP \citep{Aghaeepour2013, Aghaeepour2016} consortia).
+
+A crucial question to consider is how detailed the benchmarking should be. For an independent benchmarking, a high level of detail across all methods is critical, including evaluations according to defined performance metrics as well as peripheral measures such as user-friendliness and documentation quality. Ideally, the evaluations should test a range of values for major parameters for each method. By contrast, when introducing a new method, the focus of the benchmark will be on evaluating and comparing the performance of the new method; this may be sufficiently achieved by comparing against a single set of optimal parameter values (as judged during initial exploratory work) for competing methods.
+
+Finally, results should be carefully interpreted and summarized in the context of the original purpose and scope of the benchmark. For example, for an independent benchmarking, from the perspective of method users, it will be useful to provide guidelines regarding the optimal choice of method for certain types of analyses. Similarly, for method developers, it is useful to highlight limitations of current methods, which may be improved during future method development work.
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Selection of methods}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The selection of methods to include in the benchmark will be guided by the purpose and scope of the study. For example, for an independent benchmarking, the aim may be to include all available methods for a certain type of analysis, in order to provide readers with comprehensive information. In this case, the publication describing the benchmark will also function as a review of the literature, so it will be useful to include information characterizing and describing each method; e.g., in the form of a summary table (see Table 1 in \citep{Weber2016} or Table 1 in \citep{Saelens2018b}). Alternatively, depending on the purpose and scope, it may be meaningful to include only a specific subset of methods; e.g., those available in a certain programming language. Defining formal inclusion criteria is helpful to avoid the perception of bias: e.g., all methods that (i) provide freely available software implementations, (ii) are available for certain operating systems and programming languages, and (iii) can successfully be installed without errors. If the benchmark is organized as a community initiative or challenge, the selection of methods will be determined by the participation rules and decisions by method authors to participate. In this case, it is important to communicate the initiative widely, to ensure all method authors are aware of it; this may be facilitated by organizing the initiative through an established network or forum such as the DREAM challenges.
+
+For a benchmark performed to introduce a new method, it is likely sufficient to select a representative subset of competing methods. For example, this could consist of the best-performing method for this type of analysis (if known), a simple `baseline' method, and any methods that are especially widely-used or popular in the literature. The selection of competing methods should ensure an accurate and unbiased assessment of the relative strengths and weaknesses of the new approach, compared to the current `state-of-the-art'.
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Selection (or design) of datasets}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The selection of reference datasets is a critical design choice. If suitable publicly accessible datasets cannot be found in the literature, they will need to be generated or constructed, either experimentally or by simulation. Including a variety of datasets ensures that methods can be evaluated under a wide range of conditions. In general, reference datasets can be grouped into two main categories: simulated (or synthetic) and experimental (or real).
+
+Simulated data provide the advantage that a known `truth' (or `ground truth') can easily be included; e.g., known differentially expressed genes. This allows quantitative performance metrics to be calculated, which can then be used to rank methods by their ability to recover the known truth. However, care must be taken to design a meaningful simulation that accurately reflects the properties of real experimental data; e.g., this can be achieved by first inspecting the empirical distributions of experimental datasets. If simulations are too `simple', all methods may perform equally well, which does not provide readers with useful information. On the other hand, simplified simulations may be useful to evaluate a new method under certain assumptions; the simulation can then be adjusted to systematically interrogate the performance of the method. Tools are also available to assess the level of similarity between simulated and experimental data according to certain characteristics or features of interest, or using visualizations \citep{Soneson2017}.
+
+Experimental data, by definition, reflect the properties of real data. For benchmarking analyses, experimental datasets should be selected to reflect `typical' data for the given analysis task; e.g., containing commonly analyzed genes or cell populations. Unlike simulated data, most experimental datasets do not contain a known ground truth, making it difficult to calculate quantitative performance metrics. Instead, methods may be evaluated by comparing them against each other, or against a widely accepted method or `gold standard' (e.g., `manual gating' to define cell populations in high-dimensional cytometry data \citep{Weber2016, Aghaeepour2013}, or fluorescence in situ hybridization (FISH) to validate absolute copy number predictions \citep{Zheng2017}). For some data types, it is also possible to design experimental datasets containing an approximate ground truth. Examples include: (i) including synthetic `spike-in' RNA molecules developed by the External RNA Control Consortium (ERCC) in RNA-sequencing experiments \citep{Jiang2011}, (ii) using genes located on the X or Y chromosomes as a proxy for silencing of genes or DNA methylation status (e.g., \citep{Law2014}), and (iii) using fluorescence-activated cell sorting (FACS) to sort cells into known subpopulations based on cell surface marker proteins before further analysis by single-cell RNA-sequencing (e.g., \citep{TabulaMuris2018}). Alternatively, experimental datasets may be evaluated qualitatively, for example by judging whether each method can recover a known biological result; however, this strategy may not enable a simple ranking of methods.
+
+A further technique is to design `semi-simulated' datasets, which combine real experimental data with an `in silico' (i.e., computational) spike-in signal; e.g., by combining cells or genes from healthy or `null' samples with a subset of cells or genes from samples expected to contain a true differential signal \citep{Arvaniti2017, Weber2018, Rigaill2018}. This strategy creates datasets containing both realistic experimental variability and a known ground truth, thus allowing quantitative performance metrics to be calculated.
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Evaluation criteria: quantitative performance metrics}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The main performance evaluation and ranking of methods will generally rely on one or more key quantitative performance metrics. The choice of metrics depends largely on the methods and types of analyses under consideration. For example, for classification methods (using reference datasets containing a ground truth or gold standard), useful comparative metrics include the true positive rate (TPR; sensitivity or recall), false positive rate (FPR; $1 -$ specificity), and false discovery rate (FDR). More specifically, for clustering methods, common metrics include the F1 score, adjusted Rand index, precision, and recall (sensitivity) (e.g., \citep{Duo2018, Weber2016, Aghaeepour2013}), either calculated by cluster or averaged (possibly weighted) across all clusters. These types of metrics return a single value between 0 and 1 (or -1 and 1), which can be easily used to rank methods. These metrics may also be compared visually, e.g., using receiver operating characteristic (ROC) curves (TPR vs. FPR), TPR vs. FDR curves, or precision-recall (PR) curves. These visualizations can be used to calculate further metrics, including area under the ROC curve (AUROC or AUC ROC) and area under the precision-recall curve (AUC PR). Figure \ref{fig:metrics}a provides an overview of commonly used metrics, and Figure \ref{fig:metrics}b displays illustrative examples of several visualizations.
+
+For methods that return continuous values (e.g., estimates of effect size), examples of comparative metrics include the root mean square error (RMSE), distance measures, and correlation. For particularly complex or unusual data types, custom metrics may need to be developed (e.g., \citep{Saelens2018b}). When designing custom metrics, it is important to assess their robustness and usefulness across a range of prediction values. If multiple metrics are considered, the final rankings will need to be combined or weighted to produce an overall ranking.
+
+Additional metrics that do not rely on a ground truth or gold standard include measures of stability, stochasticity, and robustness. These measures may be quantified by running methods multiple times using different inputs or subsampled data. For example, from the user perspective, it is important to understand the expected variability in results when running methods using different `random seeds' or slightly different input data, or how often errors are likely to occur. In addition, `null comparisons' can be used to investigate performance for datasets that do not contain any true signal, to provide information on expected error rates (e.g., \citep{Weber2018, Law2014}); null comparisons must be designed carefully to avoid confounding by batch or population structure.
+
+
+
+
+% Figure
+
+\vskip 5mm
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=0.5\textwidth]{../../figures/benchmarking_metrics_schematic}
+\includegraphics[width=\textwidth]{../../figures/metrics_examples}
+\end{center}
+\caption{Summary and examples of performance metrics. (a) Overview of main categories of commonly used performance metrics, including examples (gray boxes). (b) Illustrative examples of popular visualizations of quantitative comparative performance metrics for classification methods, using reference datasets containing a ground truth or gold standard: (i) ROC curves, (ii) TPR-FDR curves (with points indicating FDR thresholds of 1\%, 5\%, and 10\%), and (iii) precision-recall curves. Visualizations in (b) generated using iCOBRA R/Bioconductor package and example data \citep{Soneson2016}.}
+\label{fig:metrics}
+\end{figure}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Evaluation criteria: other measures}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+In addition to the main quantitative performance metrics described above, methods should also be evaluated according to secondary measures such as runtime, scalability, and other computational requirements, as well as qualitative aspects such as user-friendliness and documentation quality.
+
+In our experience, runtimes and scalability can vary enormously between methods; e.g., runtimes for different clustering algorithms have ranged from minutes to days for the same analysis task on the same datasets \citep{Weber2016}. Similarly, memory and other computational requirements can vary widely. Depending on the scope of the benchmark, runtimes and scalability may be investigated systematically, e.g., by varying the number of cells in a single-cell RNA-sequencing dataset. In many cases, there is a tradeoff between performance and computational requirements. In practice, if computational requirements for a top-performing method are prohibitive (e.g., requiring a high-performance server instead of a standard laptop), then a lower-ranked method may be preferred by many users.
+
+User-friendliness, installation procedures, and documentation quality can also be highly variable. These aspects are crucial for users without extensive computational training, which includes many experimental researchers. Methods that can be installed as packages from standard repositories or using package managers (such as CRAN or Bioconductor for R, or PyPI and pip for Python) are much more accessible than methods that are only available as custom scripts, or source code that must be compiled. Methods available as packages from GitHub or as pre-built binaries provide an intermediate level of accessibility. Availability across platforms (Windows, Mac, and Linux) and within popular programming languages for data analysis (R and Python) are also important. Availability of graphical user interfaces (GUIs) extends accessibility to users without command-line experience; however, methods that are only available via GUIs hinder reproducibility and are difficult to include in a systematic benchmark, since scripts cannot be used.
+
+For many users, freely available and open source software will be preferred. Freely available software ensures broad accessibility and makes it easier to interact with collaborators, while open source software can be checked for bugs or adapted by experienced users. From the developer perspective, code quality and use of software development best practices such as unit testing and continuous integration are also important factors. Similarly, adherence to commonly used data formats (e.g., GFF/GTF files for describing genomic features, BAM/SAM files for sequence alignment data, or FCS files for flow or mass cytometry data) greatly improves accessibility and extendability. Evidence of active package maintenance and recent bug fixes provide users with confidence that unexpected problems are likely to be addressed.
+
+High-quality documentation is critical, including help pages for individual functions as well as extended tutorials or examples demonstrating how to run complete analysis pipelines. Ideally, documentation should be continually evaluated and checked; e.g., as done automatically by maintained repositories such as Bioconductor.
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Parameters and software environment}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Parameter settings can have a crucial impact on performance. For many methods, tuning parameters to optimal values requires significant effort. Depending on the scope of the benchmark, a range of parameter values may be tested for each method; e.g., in a `grid search' strategy to optimize across multiple parameters. For other methods or for smaller benchmarks, default parameters may be be adequate.
+
+Final parameter values should be carefully recorded, to ensure that readers have complete information. For methods that are run using scripts, parameter values will also be recorded within the scripts, which helps avoid errors and facilitates reproducibility. For methods only available via graphical interfaces, parameters must be recorded manually, for example in a spreadsheet. Reproducible workflow frameworks such as the Galaxy platform \citep{Afgan2018} are also helpful when using graphical tools. A summary table or spreadsheet of final parameter values can be published as supplementary information along with the final publication describing the benchmark (e.g., Supporting Information Table S1 in \citep{Weber2016}).
+
+Software versions can also influence results, especially if updates include major changes to methodology. Ideally, final results should be based on the latest available versions, and all software versions recorded. In the R programming language, the command `sessionInfo()` can be used to output a complete summary of package versions, as well as the version of R and the operating system.
+
+Automated workflow management tools and specialized tools for organizing benchmarks provide sophisticated options for setting up benchmarks and recording software environments, package versions, and parameter values. Examples include SummarizedBenchmark \citep{Kimes2018}, workflowr \citep{Blischak2018}, and Dynamical Statistical Comparisons \citep{Wang2018}. More general tools for managing computational workflows and setups, including Snakemake \citep{Koster2012} and Bioconda \citep{Gruning2018}, are also highly effective. Finally, containerization tools such as Docker and Singularity may be used to completely encapsulate a software environment for each method, preserving the package version as well as dependency packages and the operating system, and facilitating further distribution of methods to end users.
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Interpretation, conclusions, and guidelines}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+In order to make the benchmark as useful as possible for readers, the performance metrics and other results must be clearly explained and interpreted. It is helpful to consider the interpretation from both the method user and developer perspective, and to summarize the results in the form of clear conclusions, guidelines, and recommendations. Depending on the context of the benchmark, the interpretation may involve biological or other domain knowledge to establish the scientific significance of the results.
+
+For method users, the benchmark results could be presented in the form of an overall ranking of methods, using either visualizations (e.g., Figure \ref{fig:metrics}b) or summary tables (e.g., \citep{Aghaeepour2013, Weber2016}). If several key performance metrics were used, more complex visualizations are also informative; e.g., flow charts to guide the optimal choice of method for different types of data or analyses \citep{Saelens2018b}. Overall recommendations for the choice of method can also be provided. For method developers, the conclusions may include guidelines for the future development of methods; e.g., identifying limitations of current methods and highlighting possible areas for future work.
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Publication and distribution of results}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Presenting results and conclusions in an accessible format ensures that readers will be able to find them and apply them to their work. In academic research, results will usually be included in a peer-reviewed journal article. For an independent benchmark, the benchmark will be the main focus of the paper. For a benchmark performed to introduce a new method, the benchmark results will form one part of the paper. We highly recommend publishing a preprint on a recognized preprint server prior to peer review (e.g., bioRxiv or arXiv) to speed up distribution of results and solicit additional feedback; and giving consideration to open access options to broaden accessibility.
+
+For extensive benchmarks, it is also useful to create online resources to enable readers to interactively explore the benchmark, or to distribute key components, such as data objects containing pre-processed data or results (e.g., \citep{Soneson2018, Wiwie2015, Bokulich2016, Conchuir2015}). In R, the Shiny framework provides a convenient system for building interactive websites. Automated workflow management tools (e.g., workflowr \citep{Blischak2018}) also provide streamlined options for publishing results. Figure \ref{fig:shiny} displays an example of an interactive website to explore the results of a benchmark \citep{Saelens2018b}, created using Shiny.
+
+
+
+
+% Figure
+
+\vskip 5mm
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=\textwidth]{../../figures/shiny_example}
+\end{center}
+\caption{Example of an interactive website allowing users to explore the results of a benchmark \citep{Saelens2018b}. This website was created using the Shiny framework for the R programming language.}
+\label{fig:shiny}
+\end{figure}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Enabling future extensions}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Since new methods are continually being developed (e.g., \citep{Zappia2018}), published benchmarks can quickly become out of date. To avoid this, it may be useful to design benchmarks so that they can be updated or extended at a later date, either by the original authors or other researchers. For example, creating publicly accessible repositories containing all code and data allows any researcher to re-run and extend the benchmark to include new methods or datasets, or to try different parameter settings or pre-processing procedures (e.g., \citep{Saelens2018a, Saelens2018b, Duo2018, Soneson2018, Weber2016}). New results can be published as an online supplement or via updates to an interactive website.
+
+In addition to raw data and code, it is also useful to provide pre-processed data objects and calculated results objects (e.g., \citep{Duo2018}), especially for computationally intensive benchmarks. This allows method developers to compare new methods more easily, since they do not need to re-run the entire benchmark to add a new method. This may be combined with an interactive website, where users can directly upload results from a new method, automatically generating an updated comparison (e.g., \citep{Kanitz2015}).
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Reproducible research best practices}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Reproducibility of research findings has become an increasing concern in numerous areas of research \citep{Ioannidis2005}. In computational sciences, reproducibility of code scripts and data analyses has been recognized as a useful `minimum standard' that enables other researchers to verify analyses \citep{Peng2011}. This can be achieved by making all code and data (where permitted) available via public repositories. In the context of benchmarking, this also provides further benefits for both method users and developers. For method users, public code repositories serve as a useful source of annotated code to run methods and build analysis pipelines, which is especially valuable for users without extensive computational experience. For developers, code repositories can act as a prototype for future method development work as well as extensions to the benchmark itself.
+
+Many free online tools are available for these purposes, including GitHub for code sharing, publicly funded data repositories for specific data types (including ArrayExpress \citep{Kolesnikov2015}, the Gene Expression Omnibus \citep{Barrett2013}, and FlowRepository \citep{Spidlen2012}), and more general data repositories including Bioconductor's ExperimentHub, figshare, and Zenodo. Custom data repositories (e.g., \citep{Soneson2018}) can be designed when additional flexibility is needed. Several repositories allow the creation of `digital object identifiers' (DOIs) for code or data objects, which can be used for citation purposes. Workflow management tools such as workflowr \cite{Blischak2018} and Snakemake \citep{Koster2012} can be helpful for creating a complete record of steps in a benchmarking pipeline.
+
+An extensive literature exists on best practices for computational research (e.g., \citep{Sandve2013}). For extensive benchmarks, additional best practices from software development are also useful, including the use of makefiles, unit testing, continuous integration, and containerization. While the optimal level of computational reproducibility will depend on the scope of the benchmark and level of computational expertise, in our experience, almost all efforts in this area prove highly useful, especially by facilitating later adaptations or extensions to the study by ourselves or other researchers.
+
+
+
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Author contributions}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+LMW proposed the project and drafted the manuscript. WS, RC, CS, YS, and MDR contributed ideas and references and contributed to drafting of the manuscript. YS and MDR supervised the project. All authors read and approved the final manuscript.
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Competing interests}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The authors declare that they have no competing interests.
+
+
+
+
+%%%%%%%%%%%%
+% References
+%%%%%%%%%%%%
+
+\newpage
+
+
+\singlespacing
+\footnotesize
+
+\bibliography{benchmarking_guidelines_paper}
+
+\bibliographystyle{apa}
+
+
+
+
+\end{document}
+
+
+
