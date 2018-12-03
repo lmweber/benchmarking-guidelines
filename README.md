@@ -1,4 +1,9 @@
-# Essential Guidelines for Computational Method Benchmarking
+# Essential guidelines for computational method benchmarking
 
-Repository containing drafts of our review paper "Essential Guidelines for Computational Method Benchmarking".
+Code repository for our review paper "Essential guidelines for computational method benchmarking".
+
+A preprint of the paper will be posted on arXiv.
+
+An R script to reproduce Figure 1b is available in [scripts/](scripts/).
+
 

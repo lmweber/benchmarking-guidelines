@@ -1,7 +1,3 @@
 .Rproj.user
 benchmarking-guidelines.Rproj
 .DS_Store
-*.html
-*.pdf
-*.png
-.texpadtmp
